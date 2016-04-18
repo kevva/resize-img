@@ -35,7 +35,7 @@ module.exports = (buf, opts) => {
 	opts = Object.assign({}, opts);
 
 	if (typeof opts.width !== 'number' && typeof opts.height !== 'number') {
-		return Promise.reject(new TypeError('You need to set either width or height'));
+		return Promise.reject(new Error('You need to set either width or height'));
 	}
 
 	if (type.ext === 'bmp') {
@@ -58,12 +58,10 @@ module.exports = (buf, opts) => {
 		}).data);
 	}
 
-	return parsePng(buf).then(img => {
-		return resize(img, opts).then(buf => {
-			img.width = opts.width;
-			img.height = opts.height;
-			img.data = buf;
-			return getStream.buffer(img.pack());
-		});
-	});
+	return parsePng(buf).then(img => resize(img, opts).then(buf => {
+		img.width = opts.width;
+		img.height = opts.height;
+		img.data = buf;
+		return getStream.buffer(img.pack());
+	}));
 };
