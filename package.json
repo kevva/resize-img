@@ -1,0 +1,39 @@
+{
+  "name": "resize-img",
+  "version": "0.0.0",
+  "description": "Resize PNG images in memory",
+  "license": "MIT",
+  "repository": "kevva/resize-img",
+  "author": {
+    "name": "Kevin Martensson",
+    "email": "kevinmartensson@gmail.com",
+    "url": "github.com/kevva"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "fast",
+    "image",
+    "memory",
+    "png",
+    "resize"
+  ],
+  "dependencies": {
+    "get-stream": "^2.0.0",
+    "jimp": "^0.2.21",
+    "parse-png": "^1.1.1"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "image-size": "^0.5.0",
+    "pify": "^2.3.0",
+    "xo": "*"
+  }
+}
