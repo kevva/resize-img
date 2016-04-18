@@ -17,7 +17,7 @@ const fs = require('fs');
 const resizeImg = require('resize-img');
 
 resizeImg(fs.readFileSync('unicorn.png'), {width: 128, height: 128}).then(buf => {
-	fs.writeFileSync('unicorn-resized.png');
+	fs.writeFileSync('unicorn-resized.png', buf);
 });
 ```
 
