@@ -1,7 +1,7 @@
 {
   "name": "resize-img",
   "version": "1.0.0",
-  "description": "Resize PNG images in memory",
+  "description": "Resize images in memory",
   "license": "MIT",
   "repository": "kevva/resize-img",
   "author": {
@@ -19,15 +19,21 @@
     "index.js"
   ],
   "keywords": [
+    "bmp",
     "fast",
     "image",
+    "jpeg",
+    "jpg",
     "memory",
     "png",
     "resize"
   ],
   "dependencies": {
+    "bmp-js": "0.0.1",
+    "file-type": "^3.8.0",
     "get-stream": "^2.0.0",
     "jimp": "^0.2.21",
+    "jpeg-js": "^0.1.1",
     "parse-png": "^1.1.1"
   },
   "devDependencies": {

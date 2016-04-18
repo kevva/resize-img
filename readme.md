@@ -1,6 +1,6 @@
 # resize-img [![Build Status](https://travis-ci.org/kevva/resize-img.svg?branch=master)](https://travis-ci.org/kevva/resize-img)
 
-> Resize PNG images in memory
+> Resize images in memory
 
 
 ## Install
@@ -17,7 +17,7 @@ const fs = require('fs');
 const resizeImg = require('resize-img');
 
 resizeImg(fs.readFileSync('unicorn.png'), {width: 128, height: 128}).then(buf => {
-	fs.writeFileSync('unicorn-resized.png', buf);
+	fs.writeFileSync('unicorn-128x128.png', buf);
 });
 ```
 
@@ -30,7 +30,7 @@ resizeImg(fs.readFileSync('unicorn.png'), {width: 128, height: 128}).then(buf =>
 
 Type: `buffer`
 
-PNG image buffer.
+An image buffer. Supported formats are `bmp`, `jpg` and `png`.
 
 #### options
 
