@@ -47,6 +47,11 @@ Type: `number`
 Desired height of the target image.
 
 
+## Related
+
+* [resize-img-cli](https://github.com/kevva/resize-img-cli) - CLI for this module.
+
+
 ## License
 
 MIT © [Kevin Martensson](http://github.com/kevva)
