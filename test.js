@@ -56,5 +56,6 @@ test('resize image using only width', async t => {
 });
 
 test('throw when using wrong format', async t => {
-	t.throws(fn(await readFile(__filename), {width: 150}), /Image format not supported/);
+	const file = await readFile(__filename);
+	t.throws(fn(file, {width: 150}), /Image format not supported/);
 });
