@@ -61,7 +61,7 @@ module.exports = (buf, opts) => {
 	return parsePng(buf).then(img => resize(img, opts).then(buf => {
 		img.width = opts.width;
 		img.height = opts.height;
-		img.data = Buffer.isBuffer(buf) ? buf : new Buffer(buf);
+		img.data = Buffer.isBuffer(buf) ? buf : Buffer.from(buf);
 		return getStream.buffer(img.pack());
 	}));
 };
