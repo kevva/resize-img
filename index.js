@@ -8,15 +8,15 @@ const Resize = require('jimp/resize');
 
 const resize = (img, opts) => {
 	if (typeof opts.width !== 'number') {
-		opts.width = img.width * (opts.height / img.height);
+		opts.width = Math.trunc(img.width * (opts.height / img.height));
 	}
 
 	if (typeof opts.height !== 'number') {
-		opts.height = img.height * (opts.width / img.width);
+		opts.height = Math.trunc(img.height * (opts.width / img.width));
 	}
 
 	return new Promise(resolve => {
-		const resize = new Resize(img.width, img.height, Math.round(opts.width), Math.round(opts.height), true, true, buf => resolve(buf));
+		const resize = new Resize(img.width, img.height, opts.width, opts.height, true, true, buf => resolve(buf));
 		resize.resize(img.data);
 	});
 };
