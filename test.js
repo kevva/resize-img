@@ -108,3 +108,87 @@ test('throw when using wrong format', async t => {
 		/Image format not supported/
 	);
 });
+
+test('resize jpg image and output as png', async t => {
+	const image = await resizeImg(await fs.readFile('fixture.jpg'), {
+		width: 150,
+		height: 99,
+		format: 'png'
+	});
+
+	t.deepEqual(imageSize(image), {
+		width: 150,
+		height: 99,
+		type: 'png'
+	});
+});
+
+test('resize jpg image and output as bmp', async t => {
+	const image = await resizeImg(await fs.readFile('fixture.jpg'), {
+		width: 150,
+		height: 99,
+		format: 'bmp'
+	});
+
+	t.deepEqual(imageSize(image), {
+		width: 150,
+		height: 99,
+		type: 'bmp'
+	});
+});
+
+test('resize bmp image and output as png', async t => {
+	const image = await resizeImg(await fs.readFile('fixture.bmp'), {
+		width: 150,
+		height: 99,
+		format: 'png'
+	});
+
+	t.deepEqual(imageSize(image), {
+		width: 150,
+		height: 99,
+		type: 'png'
+	});
+});
+
+test('resize bmp image and output as jpg', async t => {
+	const image = await resizeImg(await fs.readFile('fixture.bmp'), {
+		width: 150,
+		height: 99,
+		format: 'jpg'
+	});
+
+	t.deepEqual(imageSize(image), {
+		width: 150,
+		height: 99,
+		type: 'jpg'
+	});
+});
+
+test('resize png image and output as bmp', async t => {
+	const image = await resizeImg(await fs.readFile('fixture.png'), {
+		width: 150,
+		height: 99,
+		format: 'bmp'
+	});
+
+	t.deepEqual(imageSize(image), {
+		width: 150,
+		height: 99,
+		type: 'bmp'
+	});
+});
+
+test('resize png image and output as jpg', async t => {
+	const image = await resizeImg(await fs.readFile('fixture.png'), {
+		width: 150,
+		height: 99,
+		format: 'jpg'
+	});
+
+	t.deepEqual(imageSize(image), {
+		width: 150,
+		height: 99,
+		type: 'jpg'
+	});
+});

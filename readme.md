@@ -55,6 +55,12 @@ Type: `number`
 
 Desired height of the target image.
 
+##### format
+
+Type: `string`
+
+The output file format for the target image. Supported formats are `bmp`, `jpg` and `png`.
+
 
 ## Related
 

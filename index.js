@@ -2,6 +2,12 @@
 const fileType = require('file-type');
 const Jimp = require('jimp');
 
+const supportedFormats = {
+	bmp: Jimp.MIME_BMP,
+	jpg: Jimp.MIME_JPEG,
+	png: Jimp.MIME_PNG
+};
+
 module.exports = async (buffer, options = {}) => {
 	if (!Buffer.isBuffer(buffer)) {
 		throw new TypeError(
@@ -11,7 +17,7 @@ module.exports = async (buffer, options = {}) => {
 
 	const type = fileType(buffer);
 
-	if (!type || (type.ext !== 'bmp' && type.ext !== 'jpg' && type.ext !== 'png')) {
+	if (!type || !Object.keys(supportedFormats).includes(type.ext)) {
 		throw new Error('Image format not supported');
 	}
 
@@ -20,6 +26,7 @@ module.exports = async (buffer, options = {}) => {
 	}
 
 	const image = await Jimp.read(buffer);
+	const mime = supportedFormats[options.format] || Jimp.AUTO;
 
 	if (typeof options.width !== 'number') {
 		options.width = Math.trunc(image.bitmap.width * (options.height / image.bitmap.height));
@@ -31,5 +38,5 @@ module.exports = async (buffer, options = {}) => {
 
 	return image
 		.resize(options.width, options.height)
-		.getBufferAsync(Jimp.AUTO);
+		.getBufferAsync(mime);
 };
