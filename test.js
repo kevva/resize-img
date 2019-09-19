@@ -2,7 +2,7 @@ import fs from 'fs';
 import imageSize from 'image-size';
 import pify from 'pify';
 import test from 'ava';
-import fn from './';
+import fn from '.';
 
 const readFile = pify(fs.readFile);
 
@@ -107,5 +107,5 @@ test('resize bmp image using only height', async t => {
 
 test('throw when using wrong format', async t => {
 	const file = await readFile(__filename);
-	await t.throws(fn(file, {width: 150}), /Image format not supported/);
+	await t.throwsAsync(() => fn(file, {width: 150}), /Image format not supported/);
 });
