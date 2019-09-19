@@ -192,3 +192,20 @@ test('resize png image and output as jpg', async t => {
 		type: 'jpg'
 	});
 });
+
+test('throw if `width` and `height` is not provided', async t => {
+	await t.throwsAsync(
+		resizeImg(await fs.readFile('fixture.png')),
+		/You need to set either `width` or `height` options/
+	);
+
+	await t.throwsAsync(
+		resizeImg(await fs.readFile('fixture.png'), {width: NaN}),
+		/You need to set either `width` or `height` options/
+	);
+
+	await t.throwsAsync(
+		resizeImg(await fs.readFile('fixture.png'), {width: Infinity}),
+		/You need to set either `width` or `height` options/
+	);
+});

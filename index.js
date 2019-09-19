@@ -21,8 +21,8 @@ module.exports = async (buffer, options = {}) => {
 		throw new Error('Image format not supported');
 	}
 
-	if (typeof options.width !== 'number' && typeof options.height !== 'number') {
-		throw new TypeError('You need to set either width or height');
+	if (!Number.isFinite(options.width) && !Number.isFinite(options.height)) {
+		throw new TypeError('You need to set either `width` or `height` options');
 	}
 
 	const image = await Jimp.read(buffer);
