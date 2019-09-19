@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --save resize-img
+$ npm install resize-img
 ```
 
 
@@ -16,23 +16,32 @@ $ npm install --save resize-img
 const fs = require('fs');
 const resizeImg = require('resize-img');
 
-resizeImg(fs.readFileSync('unicorn.png'), {width: 128, height: 128}).then(buf => {
-	fs.writeFileSync('unicorn-128x128.png', buf);
-});
+(async () => {
+	const image = await resizeImg(fs.readFileSync('unicorn.png'), {
+		width: 128,
+		height: 128
+	});
+
+	fs.writeFileSync('unicorn-128x128.png', image);
+})();
 ```
 
 
 ## API
 
-### resizeImg(input, options)
+### resizeImg(buffer, options)
 
-#### input
+Returns a `Promise<Buffer>` with the resized image.
 
-Type: `buffer`
+#### buffer
+
+Type: `Buffer`
 
 An image buffer. Supported formats are `bmp`, `jpg` and `png`.
 
 #### options
+
+Type: `Object`
 
 ##### width
 
@@ -50,8 +59,3 @@ Desired height of the target image.
 ## Related
 
 * [resize-img-cli](https://github.com/kevva/resize-img-cli) - CLI for this module.
-
-
-## License
-
-MIT © [Kevin Martensson](http://github.com/kevva)

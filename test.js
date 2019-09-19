@@ -1,18 +1,15 @@
-import fs from 'fs';
+import {promises as fs} from 'fs';
 import imageSize from 'image-size';
-import pify from 'pify';
 import test from 'ava';
-import fn from './';
-
-const readFile = pify(fs.readFile);
+import resizeImg from '.';
 
 test('resize png image', async t => {
-	const data = await fn(await readFile('fixture.png'), {
+	const image = await resizeImg(await fs.readFile('fixture.png'), {
 		width: 150,
 		height: 99
 	});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 99,
 		type: 'png'
@@ -20,12 +17,12 @@ test('resize png image', async t => {
 });
 
 test('resize jpg image', async t => {
-	const data = await fn(await readFile('fixture.jpg'), {
+	const image = await resizeImg(await fs.readFile('fixture.jpg'), {
 		width: 150,
 		height: 99
 	});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 99,
 		type: 'jpg'
@@ -33,12 +30,12 @@ test('resize jpg image', async t => {
 });
 
 test('resize bmp image', async t => {
-	const data = await fn(await readFile('fixture.bmp'), {
+	const image = await resizeImg(await fs.readFile('fixture.bmp'), {
 		width: 150,
 		height: 99
 	});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 99,
 		type: 'bmp'
@@ -46,9 +43,9 @@ test('resize bmp image', async t => {
 });
 
 test('resize png image using only width', async t => {
-	const data = await fn(await readFile('fixture.png'), {width: 150});
+	const image = await resizeImg(await fs.readFile('fixture.png'), {width: 150});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 99,
 		type: 'png'
@@ -56,9 +53,9 @@ test('resize png image using only width', async t => {
 });
 
 test('resize jpg image using only width', async t => {
-	const data = await fn(await readFile('fixture.jpg'), {width: 150});
+	const image = await resizeImg(await fs.readFile('fixture.jpg'), {width: 150});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 99,
 		type: 'jpg'
@@ -66,9 +63,9 @@ test('resize jpg image using only width', async t => {
 });
 
 test('resize bmp image using only width', async t => {
-	const data = await fn(await readFile('fixture.bmp'), {width: 150});
+	const image = await resizeImg(await fs.readFile('fixture.bmp'), {width: 150});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 99,
 		type: 'bmp'
@@ -76,9 +73,9 @@ test('resize bmp image using only width', async t => {
 });
 
 test('resize png image using only height', async t => {
-	const data = await fn(await readFile('fixture.png'), {height: 100});
+	const image = await resizeImg(await fs.readFile('fixture.png'), {height: 100});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 100,
 		type: 'png'
@@ -86,9 +83,9 @@ test('resize png image using only height', async t => {
 });
 
 test('resize jpg image using only height', async t => {
-	const data = await fn(await readFile('fixture.jpg'), {height: 100});
+	const image = await resizeImg(await fs.readFile('fixture.jpg'), {height: 100});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 100,
 		type: 'jpg'
@@ -96,9 +93,9 @@ test('resize jpg image using only height', async t => {
 });
 
 test('resize bmp image using only height', async t => {
-	const data = await fn(await readFile('fixture.bmp'), {height: 100});
+	const image = await resizeImg(await fs.readFile('fixture.bmp'), {height: 100});
 
-	t.deepEqual(imageSize(data), {
+	t.deepEqual(imageSize(image), {
 		width: 150,
 		height: 100,
 		type: 'bmp'
@@ -106,6 +103,8 @@ test('resize bmp image using only height', async t => {
 });
 
 test('throw when using wrong format', async t => {
-	const file = await readFile(__filename);
-	await t.throws(fn(file, {width: 150}), /Image format not supported/);
+	await t.throwsAsync(
+		resizeImg(await fs.readFile(__filename), {width: 150}),
+		/Image format not supported/
+	);
 });
