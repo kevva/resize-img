@@ -21,7 +21,7 @@ const resize = (img, opts) => {
 	});
 };
 
-module.exports = (buf, opts) => {
+module.exports = async (buf, opts) => {
 	if (!Buffer.isBuffer(buf)) {
 		return Promise.reject(new TypeError('Expected a buffer'));
 	}
@@ -32,7 +32,7 @@ module.exports = (buf, opts) => {
 		return Promise.reject(new Error('Image format not supported'));
 	}
 
-	opts = Object.assign({}, opts);
+	opts = {...opts};
 
 	if (typeof opts.width !== 'number' && typeof opts.height !== 'number') {
 		return Promise.reject(new Error('You need to set either width or height'));
@@ -41,27 +41,32 @@ module.exports = (buf, opts) => {
 	if (type.ext === 'bmp') {
 		const img = bmp.decode(buf);
 
-		return resize(img, opts).then(buf => bmp.encode({
+		buf = await resize(img, opts);
+		return bmp.encode({
 			width: opts.width,
 			height: opts.height,
 			data: buf
-		}).data);
+		}).data;
 	}
 
 	if (type.ext === 'jpg') {
 		const img = jpeg.decode(buf);
 
-		return resize(img, opts).then(buf => jpeg.encode({
+		buf = await resize(img, opts);
+		return jpeg.encode({
 			width: opts.width,
 			height: opts.height,
 			data: buf
-		}).data);
+		}).data;
 	}
 
-	return parsePng(buf).then(img => resize(img, opts).then(buf => {
+	{
+		const img = await parsePng(buf);
+		buf = await resize(img, opts);
+
 		img.width = opts.width;
 		img.height = opts.height;
 		img.data = Buffer.isBuffer(buf) ? buf : Buffer.from(buf);
 		return getStream.buffer(img.pack());
-	}));
+	}
 };
