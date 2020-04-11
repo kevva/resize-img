@@ -30,7 +30,7 @@
 	],
 	"dependencies": {
 		"file-type": "^12.3.0",
-		"jimp": "^0.8.3"
+		"jimp": "^0.10.1"
 	},
 	"devDependencies": {
 		"ava": "^2.4.0",
