@@ -28,6 +28,10 @@ module.exports = async (buffer, options = {}) => {
 	const image = await Jimp.read(buffer);
 	const mime = supportedFormats[options.format] || Jimp.AUTO;
 
+	if (mime === Jimp.MIME_JPEG && options.quality) {
+		image.quality(options.quality);
+	}
+
 	if (typeof options.width !== 'number') {
 		options.width = Math.trunc(image.bitmap.width * (options.height / image.bitmap.height));
 	}
